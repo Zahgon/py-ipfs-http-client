@@ -65,5 +65,4 @@ class Section(base.SectionBase):
 		| Value | The new value of the this configuration key |
 		+-------+---------------------------------------------+
 		"""
-		args = (key, value)
-		return self._client.request('/config', args, decoder='json', **kwargs)
+		pass

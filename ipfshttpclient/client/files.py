@@ -7,7 +7,7 @@ from .. import utils
 
 
 class Section(base.SectionBase):
-	"""Manage files in IPFS's virtual “Mutable File System” (MFS) file storage space"""
+	"""Manage files in IPFS's virtual â€œMutable File Systemâ€� (MFS) file storage space"""
 	
 	@base.returns_no_item
 	def cp(self, source: str, dest: str, **kwargs: base.CommonArgs):
@@ -15,7 +15,7 @@ class Section(base.SectionBase):
 		
 		Due to the nature of IPFS this will not actually involve any copying of
 		the file's content. Instead, a new link will be added to the directory
-		containing *dest* referencing the CID of *source* – this is very similar
+		containing *dest* referencing the CID of *source* â€“ this is very similar
 		to how hard links to read-only files work in classical filesystems.
 		
 		.. code-block:: python
@@ -41,8 +41,7 @@ class Section(base.SectionBase):
 			Destination filepath within the MFS to which the file will be
 			copied/linked to
 		"""
-		args = (source, dest)
-		return self._client.request('/files/cp', args, **kwargs)
+		pass
 
 
 	#TODO: Add `flush(path="/")`
@@ -72,8 +71,7 @@ class Section(base.SectionBase):
 		| Entries | List of files in the given MFS directory |
 		+---------+------------------------------------------+
 		"""
-		args = (path,)
-		return self._client.request('/files/ls', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_no_item
@@ -92,10 +90,7 @@ class Section(base.SectionBase):
 			Create parent directories as needed and do not raise an exception
 			if the requested directory already exists
 		"""
-		kwargs.setdefault("opts", {})["parents"] = parents
-		
-		args = (path,)
-		return self._client.request('/files/mkdir', args, **kwargs)
+		pass
 	
 	
 	@base.returns_no_item
@@ -113,8 +108,7 @@ class Section(base.SectionBase):
 		dest
 			Destination to which the file will be moved in the MFS
 		"""
-		args = (source, dest)
-		return self._client.request('/files/mv', args, **kwargs)
+		pass
 	
 	
 	def read(self, path: str, offset: int = 0, count: ty.Optional[int] = None,
@@ -139,13 +133,7 @@ class Section(base.SectionBase):
 		-------
 			bytes : MFS file contents
 		"""
-		opts = {"offset": offset}
-		if count is not None:
-			opts["count"] = count
-		kwargs.setdefault("opts", {}).update(opts)
-		
-		args = (path,)
-		return self._client.request('/files/read', args, **kwargs)
+		pass
 	
 	
 	@base.returns_no_item
@@ -168,10 +156,7 @@ class Section(base.SectionBase):
 		recursive
 			Recursively remove directories?
 		"""
-		kwargs.setdefault("opts", {})["recursive"] = recursive
-		
-		args = (path,)
-		return self._client.request('/files/rm', args, **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -222,14 +207,7 @@ class Section(base.SectionBase):
 		count
 			Maximum number of bytes to read from the source ``file``
 		"""
-		opts = {"offset": offset, "create": create, "truncate": truncate}
-		if count is not None:
-			opts["count"] = count
-		kwargs.setdefault("opts", {}).update(opts)
-		
-		args = (path,)
-		body, headers = multipart.stream_files(file, chunk_size=self.chunk_size)
-		return self._client.request('/files/write', args, data=body, headers=headers, **kwargs)
+		pass
 
 
 class Base(base.ClientBase):
@@ -247,7 +225,7 @@ class Base(base.ClientBase):
 	        **kwargs: base.CommonArgs):
 		"""Adds a file, several files or directory of files to IPFS
 		
-		Arguments marked as “directories only” will be ignored unless *file*
+		Arguments marked as â€œdirectories onlyâ€� will be ignored unless *file*
 		refers to a directory path or file descriptor. Passing a directory file
 		descriptor is currently restricted to Unix (due to Python standard
 		library limitations on Windows) and will prevent the *nocopy* feature
@@ -267,7 +245,7 @@ class Base(base.ClientBase):
 		By default only regular files and directories immediately below the given
 		directory path/FD are uploaded to the connected IPFS node; to upload an
 		entire directory tree instead, *recursive* can be set to ``True``.
-		Symbolic links and special files (pipes, sockets, devices nodes, …) cannot
+		Symbolic links and special files (pipes, sockets, devices nodes, â€¦) cannot
 		be represented by the UnixFS data structure this call creates and hence
 		are ignored while scanning the target directory, to include the targets
 		of symbolic links in the upload set *follow_symlinks* to ``True``.
@@ -285,10 +263,10 @@ class Base(base.ClientBase):
 		cause a scan of the directories required to match their value).
 		
 		Note that unlike the ``ipfs add`` CLI interface this implementation will
-		be default include dot-files (“files that are hidden”) – any file or
-		directory whose name starts with a period/dot character – in the upload.
+		be default include dot-files (â€œfiles that are hiddenâ€�) â€“ any file or
+		directory whose name starts with a period/dot character â€“ in the upload.
 		For behaviour that is similar to the CLI command set *pattern* to
-		``"**"`` – this enables the default glob behaviour of not matching
+		``"**"`` â€“ this enables the default glob behaviour of not matching
 		dot-files unless *period_special* is set to ``False`` or the pattern
 		actually starts with a period.
 		
@@ -311,7 +289,7 @@ class Base(base.ClientBase):
 		follow_symlinks
 			Follow symbolic links when recursively scanning directories? (directories only)
 		period_special
-			Treat files and directories with a leading period character (“dot-files”)
+			Treat files and directories with a leading period character (â€œdot-filesâ€�)
 			specially in glob patterns? (directories only)
 			
 			If this is set these files will only be matched by path labels whose
@@ -340,43 +318,7 @@ class Base(base.ClientBase):
 				of one or more items unless only a single file (not directory)
 				was given
 		"""
-		opts = {
-			"trickle": trickle,
-			"only-hash": only_hash,
-			"wrap-with-directory": wrap_with_directory,
-			"pin": pin,
-			"raw-leaves": raw_leaves if raw_leaves is not None else nocopy,
-			"nocopy": nocopy
-		}  # type: ty.Dict[str, ty.Union[str, bool]]
-		for option_name, option_value in [
-			("chunker", chunker),
-			("cid-version", cid_version),
-		]:
-			if option_value is not None:
-				opts[option_name] = option_value
-		kwargs.setdefault("opts", {}).update(opts)
-		
-		# There may be other cases where nocopy will silently fail to work, but
-		# this is by far the most obvious one
-		if isinstance(file, int) and nocopy:
-			raise ValueError("Passing file descriptors is incompatible with *nocopy*")
-		
-		assert not isinstance(file, (tuple, list)), \
-		       "Use `client.add(name1, name2, …)` to add several items"
-		multiple = (len(files) > 0)
-		to_send  = ((file,) + files) if multiple else file
-		body, headers, is_dir = multipart.stream_filesystem_node(
-			to_send, chunk_size=self.chunk_size, follow_symlinks=follow_symlinks,
-			period_special=period_special, patterns=pattern, recursive=recursive
-		)
-		
-		resp = self._client.request('/add', decoder='json', data=body, headers=headers, **kwargs)
-		if not multiple and not is_dir and not wrap_with_directory:
-			assert len(resp) == 1
-			return base.ResponseBase(resp[0])
-		elif kwargs.get("stream", False):
-			return base.ResponseWrapIterator(resp, base.ResponseBase)
-		return [base.ResponseBase(v) for v in resp]
+		pass
 	
 	
 	@base.returns_no_item
@@ -408,7 +350,7 @@ class Base(base.ClientBase):
 			  ...
 			ipfsapi.exceptions.Error: this dag node is a directory
 			>>> client.cat('QmeKozNssnkJ4NcyRidYgDY2jfRZqVEoRGfipkgath71bX')
-			b'<!DOCTYPE html>\n<html>\n\n<head>\n<title>ipfs example viewer</…'
+			b'<!DOCTYPE html>\n<html>\n\n<head>\n<title>ipfs example viewer</â€¦'
 		
 		Parameters
 		----------
@@ -424,14 +366,7 @@ class Base(base.ClientBase):
 			bytes
 				The file's contents
 		"""
-		args = (str(cid),)
-		opts = {}
-		if offset != 0:
-			opts['offset'] = offset
-		if length is not None:
-			opts['length'] = length
-		kwargs.setdefault('opts', opts)
-		return self._client.request('/cat', args, **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -446,7 +381,7 @@ class Base(base.ClientBase):
 					'Links': [
 						{'Hash': 'Qmd2xkBfEwEs9oMTk77A6jrsgurpF3ugXSg7dtPNFkcNMV',
 						 'Name': 'Makefile',          'Size': 174, 'Type': 2},
-						…
+						â€¦
 						{'Hash': 'QmSY8RfVntt3VdxWppv9w5hWgNrE31uctgTiYwKir8eXJY',
 						 'Name': 'published-version', 'Size': 55,  'Type': 2}
 					]
@@ -463,5 +398,4 @@ class Base(base.ClientBase):
 			dict
 				Directory information and contents
 		"""
-		args = (str(cid),)
-		return self._client.request('/ls', args, decoder='json', **kwargs)
+		pass

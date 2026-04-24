@@ -42,10 +42,7 @@ class PatchSection(base.SectionBase):
 		| Hash | Hash of the newly derived object |
 		+------+----------------------------------+
 		"""
-		kwargs.setdefault("opts", {})["create"] = create
-		
-		args = (str(root), name, str(ref),)
-		return self._client.request('/object/patch/add-link', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -58,7 +55,7 @@ class PatchSection(base.SectionBase):
 		
 		.. code-block:: python
 		
-			>>> client.object.patch.append_data("QmZZmY … fTqm", io.BytesIO(b"bla"))
+			>>> client.object.patch.append_data("QmZZmY â€¦ fTqm", io.BytesIO(b"bla"))
 			{'Hash': 'QmR79zQQj2aDfnrNgczUhvf2qWapEfQ82YQRt3QjrbhSb2'}
 		
 		Parameters
@@ -76,10 +73,7 @@ class PatchSection(base.SectionBase):
 		| Hash | Hash of the newly derived object |
 		+------+----------------------------------+
 		"""
-		args = (str(cid),)
-		body, headers = multipart.stream_files(new_data, chunk_size=self.chunk_size)
-		return self._client.request('/object/patch/append-data', args, decoder='json',
-		                            data=body, headers=headers, **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -112,8 +106,7 @@ class PatchSection(base.SectionBase):
 		| Hash | Hash of the newly derived object |
 		+------+----------------------------------+
 		"""
-		args = (str(root), link)
-		return self._client.request('/object/patch/rm-link', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -147,10 +140,7 @@ class PatchSection(base.SectionBase):
 		| Hash | Hash of the newly derived object |
 		+------+----------------------------------+
 		"""
-		args = (str(root),)
-		body, headers = multipart.stream_files(data, chunk_size=self.chunk_size)
-		return self._client.request('/object/patch/set-data', args, decoder='json', data=body,
-		                            headers=headers, **kwargs)
+		pass
 
 
 
@@ -176,8 +166,7 @@ class Section(base.SectionBase):
 			bytes
 				Raw object data
 		"""
-		args = (str(cid),)
-		return self._client.request('/object/data', args, **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -226,7 +215,7 @@ class Section(base.SectionBase):
 		
 		.. code-block:: python
 		
-			>>> client.object.links('QmTkzDwWqPbnAh5YiV5VwcTLnGdwSNsNTn2aDx … ca7D')
+			>>> client.object.links('QmTkzDwWqPbnAh5YiV5VwcTLnGdwSNsNTn2aDx â€¦ ca7D')
 			{'Hash': 'QmTkzDwWqPbnAh5YiV5VwcTLnGdwSNsNTn2aDxdXBFca7D',
 			 'Links': [
 				{'Hash': 'Qmd2xkBfEwEs9oMTk77A6jrsgurpF3ugXSg7dtPNFkcNMV',
@@ -255,8 +244,7 @@ class Section(base.SectionBase):
 		| Links | List of links associated with the given object |
 		+-------+------------------------------------------------+
 		"""
-		args = (str(cid),)
-		return self._client.request('/object/links', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -287,8 +275,7 @@ class Section(base.SectionBase):
 		| Hash  | The hash of the requested empty object |
 		+-------+----------------------------------------+
 		"""
-		args = (template,) if template is not None else ()
-		return self._client.request('/object/new', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -302,7 +289,7 @@ class Section(base.SectionBase):
 			...           "Data": "another",
 			...           "Links": [ {
 			...               "Name": "some link",
-			...               "Hash": "QmXg9Pp2ytZ14xgmQjYEiHjVjMFXzCV … R39V",
+			...               "Hash": "QmXg9Pp2ytZ14xgmQjYEiHjVjMFXzCV â€¦ R39V",
 			...               "Size": 8
 			...           } ]
 			...       }'''))
@@ -326,9 +313,7 @@ class Section(base.SectionBase):
 				See the :meth:`~ipfshttpclient.Client.object.links` method for
 				details.
 		"""
-		body, headers = multipart.stream_files(file, chunk_size=self.chunk_size)
-		return self._client.request('/object/put', decoder='json', data=body,
-		                            headers=headers, **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -384,5 +369,4 @@ class Section(base.SectionBase):
 		-------
 			dict
 		"""
-		args = (str(a), str(b))
-		return self._client.request('/object/diff', args, decoder='json', **kwargs)
+		pass

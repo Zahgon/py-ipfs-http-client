@@ -134,7 +134,7 @@ class StreamDecodeIteratorSync(ty.Generic[T_co]):
 				if len(data) > 0:
 					self._parser_iter = self._parser.parse_partial(data)
 			except StopIteration:
-				# No more data to receive – destroy response iterator and
+				# No more data to receive â€“ destroy response iterator and
 				# iterate over the final fragments returned by the parser
 				self._response_iter = None
 				self._parser_iter   = self._parser.parse_finalize()
@@ -203,39 +203,8 @@ class ReadableStreamWrapper:
 		self._generator = generator
 	
 	def read(self, length: ty.Optional[int] = None) -> bytes:
-		# Handle “take all” mode
-		if length is None:
-			buffer = self._buffer
-			for chunk in self._generator:
-				buffer.extend(chunk)
-			
-			try:
-				return bytes(buffer)
-			finally:
-				buffer.clear()
-		
-		# Handle buffered mode if the current buffer is not empty
-		#
-		# This may return short reads, but we don't care as that is valid as long
-		# as at least 1 byte is returned.
-		if len(self._buffer) > 0:
-			try:
-				return bytes(self._buffer[0:length])
-			finally:
-				del self._buffer[0:length]
-		
-		# Handle buffered mode if we need to request new data from the iterator
-		try:
-			chunk = b""
-			while len(chunk) < 1:
-				chunk = next(self._generator)
-		except StopIteration:
-			return b""
-		else:
-			try:
-				return bytes(chunk[0:length])
-			finally:
-				self._buffer.extend(chunk[length:])
+		# Handle â€œtake allâ€� mode
+		pass
 	
 	def close(self) -> None:
 		self._generator.close()
@@ -349,7 +318,7 @@ class ClientSyncBase(ty.Generic[S], metaclass=abc.ABCMeta):
 	base
 		The path prefix for API calls
 	offline
-		Ask daemon to operate in “offline mode” – that is, it should not consult
+		Ask daemon to operate in â€œoffline modeâ€� â€“ that is, it should not consult
 		the network when unable to find resources locally, but fail instead
 	workarounds
 		List of daemon workarounds to apply
@@ -449,7 +418,7 @@ class ClientSyncBase(ty.Generic[S], metaclass=abc.ABCMeta):
 	) -> ty.Tuple[ty.List[Closable], ty.Generator[bytes, ty.Any, ty.Any]]:
 		...
 	
-	#XXX: There must be some way to make the following shorter…
+	#XXX: There must be some way to make the following shorterâ€¦
 	@ty.overload
 	def request(
 			self, path: str,
@@ -561,7 +530,7 @@ class ClientSyncBase(ty.Generic[S], metaclass=abc.ABCMeta):
 		opts
 			Query string parameters to be sent along with the HTTP request
 		offline
-			Whether to request to daemon to handle this request in “offline-mode”
+			Whether to request to daemon to handle this request in â€œoffline-modeâ€�
 		auth
 			Authentication data to send along with this request as
 			``(username, password)`` tuple
@@ -649,7 +618,7 @@ class ClientSyncBase(ty.Generic[S], metaclass=abc.ABCMeta):
 			like the internet but is a major bottleneck when communicating with the
 			daemon on ``localhost``.
 		offline
-			Whether to request to daemon to handle this request in “offline-mode”
+			Whether to request to daemon to handle this request in â€œoffline-modeâ€�
 		auth
 			Authentication data to send along with this request as
 			``(username, password)`` tuple

@@ -17,7 +17,7 @@ class Section(base.SectionBase):
 		
 		.. code-block:: python
 		
-			>>> client.name.publish('/ipfs/QmfZY61ukoQuCX8e5Pt7v8pRfhkyxwZK … GZ5d')
+			>>> client.name.publish('/ipfs/QmfZY61ukoQuCX8e5Pt7v8pRfhkyxwZK â€¦ GZ5d')
 			{'Value': '/ipfs/QmfZY61ukoQuCX8e5Pt7v8pRfhkyxwZKZMTodAtmvyGZ5d',
 			 'Name': 'QmVgNoP89mzpgEAAqK8owYoDEyB97MkcGvoWZir8otE9Uc'}
 		
@@ -36,7 +36,7 @@ class Section(base.SectionBase):
 			Valid units are:
 			
 			 * ``"ns"``
-			 * ``"us"`` (or ``"µs"``)
+			 * ``"us"`` (or ``"Âµs"``)
 			 * ``"ms"``
 			 * ``"s"``
 			 * ``"m"``
@@ -59,17 +59,7 @@ class Section(base.SectionBase):
 		| Value | Value that was published                                 |
 		+-------+----------------------------------------------------------+
 		"""
-		opts = {"lifetime": str(lifetime),
-		        "resolve": resolve,
-		        "allow-offline": allow_offline}
-		if ttl:
-			opts["ttl"] = str(ttl)
-		if key:
-			opts["key"] = key
-		kwargs.setdefault("opts", {}).update(opts)
-		
-		args = (ipfs_path,)
-		return self._client.request('/name/publish', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -113,12 +103,4 @@ class Section(base.SectionBase):
 		| Path | The resolved value of the given name |
 		+------+--------------------------------------+
 		"""
-		opts = {"recursive": recursive, "nocache": nocache}
-		if dht_record_count is not None:
-			opts["dht-record-count"] = str(dht_record_count)
-		if dht_timeout is not None:
-			opts["dht-timeout"] = str(dht_timeout)
-		
-		kwargs.setdefault("opts", {}).update(opts)
-		args = (name,) if name is not None else ()
-		return self._client.request('/name/resolve', args, decoder='json', **kwargs)
+		pass

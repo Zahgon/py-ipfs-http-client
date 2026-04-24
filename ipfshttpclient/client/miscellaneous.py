@@ -43,10 +43,7 @@ class Base(base.ClientBase):
 		| Path | Resource were a DNS entry points to |
 		+------+-------------------------------------+
 		"""
-		kwargs.setdefault("opts", {})["recursive"] = recursive
-		
-		args = (domain_name,)
-		return self._client.request('/dns', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -60,20 +57,20 @@ class Base(base.ClientBase):
 		
 			>>> client.id()
 			{'ID': 'QmVgNoP89mzpgEAAqK8owYoDEyB97MkcGvoWZir8otE9Uc',
-			'PublicKey': 'CAASpgIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggE … BAAE=',
+			'PublicKey': 'CAASpgIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggE â€¦ BAAE=',
 			'AgentVersion': 'go-libp2p/3.3.4',
 			'ProtocolVersion': 'ipfs/0.1.0',
 			'Addresses': [
-				'/ip4/127.0.0.1/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8owYo … E9Uc',
-				'/ip4/10.1.0.172/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8owY … E9Uc',
-				'/ip4/172.18.0.1/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8owY … E9Uc',
-				'/ip6/::1/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8owYoDEyB97 … E9Uc',
-				'/ip6/fccc:7904:b05b:a579:957b:deef:f066:cad9/tcp/400 … E9Uc',
-				'/ip6/fd56:1966:efd8::212/tcp/4001/ipfs/QmVgNoP89mzpg … E9Uc',
-				'/ip6/fd56:1966:efd8:0:def1:34d0:773:48f/tcp/4001/ipf … E9Uc',
-				'/ip6/2001:db8:1::1/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8 … E9Uc',
-				'/ip4/77.116.233.54/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8 … E9Uc',
-				'/ip4/77.116.233.54/tcp/10842/ipfs/QmVgNoP89mzpgEAAqK … E9Uc']}
+				'/ip4/127.0.0.1/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8owYo â€¦ E9Uc',
+				'/ip4/10.1.0.172/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8owY â€¦ E9Uc',
+				'/ip4/172.18.0.1/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8owY â€¦ E9Uc',
+				'/ip6/::1/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8owYoDEyB97 â€¦ E9Uc',
+				'/ip6/fccc:7904:b05b:a579:957b:deef:f066:cad9/tcp/400 â€¦ E9Uc',
+				'/ip6/fd56:1966:efd8::212/tcp/4001/ipfs/QmVgNoP89mzpg â€¦ E9Uc',
+				'/ip6/fd56:1966:efd8:0:def1:34d0:773:48f/tcp/4001/ipf â€¦ E9Uc',
+				'/ip6/2001:db8:1::1/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8 â€¦ E9Uc',
+				'/ip4/77.116.233.54/tcp/4001/ipfs/QmVgNoP89mzpgEAAqK8 â€¦ E9Uc',
+				'/ip4/77.116.233.54/tcp/10842/ipfs/QmVgNoP89mzpgEAAqK â€¦ E9Uc']}
 		
 		Parameters
 		----------
@@ -85,8 +82,7 @@ class Base(base.ClientBase):
 			dict
 				Information about the IPFS node
 		"""
-		args = (peer,) if peer is not None else ()
-		return self._client.request('/id', args, decoder='json', **kwargs)
+		pass
 	
 	
 	#TODO: isOnline()
@@ -104,7 +100,7 @@ class Base(base.ClientBase):
 		
 			>>> client.ping("QmTzQ1JRkWErjk39mryYw2WVaphAZNAREyMchXzYQ7c15n")
 			[{'Success': True,  'Time': 0,
-			  'Text': 'Looking up peer QmTzQ1JRkWErjk39mryYw2WVaphAZN … c15n'},
+			  'Text': 'Looking up peer QmTzQ1JRkWErjk39mryYw2WVaphAZN â€¦ c15n'},
 			 {'Success': False, 'Time': 0,
 			  'Text': 'Peer lookup error: routing: not found'}]
 		
@@ -125,10 +121,7 @@ class Base(base.ClientBase):
 			list
 				Progress reports from the ping
 		"""
-		kwargs.setdefault("opts", {})["count"] = count
-		
-		args = (peer,) + peers
-		return self._client.request('/ping', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -144,7 +137,7 @@ class Base(base.ClientBase):
 		
 		.. code-block:: python
 		
-			>>> client.resolve("/ipfs/QmTkzDwWqPbnAh5YiV5VwcTLnGdw … ca7D/Makefile")
+			>>> client.resolve("/ipfs/QmTkzDwWqPbnAh5YiV5VwcTLnGdw â€¦ ca7D/Makefile")
 			{'Path': '/ipfs/Qmd2xkBfEwEs9oMTk77A6jrsgurpF3ugXSg7dtPNFkcNMV'}
 			>>> client.resolve("/ipns/ipfs.io")
 			{'Path': '/ipfs/QmTzQ1JRkWErjk39mryYw2WVaphAZNAREyMchXzYQ7c15n'}
@@ -164,10 +157,7 @@ class Base(base.ClientBase):
 		| Path | IPFS path of the requested resource |
 		+------+-------------------------------------+
 		"""
-		kwargs.setdefault("opts", {})["recursive"] = recursive
-		
-		args = (path,)
-		return self._client.request('/resolve', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_no_item
@@ -178,12 +168,7 @@ class Base(base.ClientBase):
 		:class:`~ipfshttpclient.exceptions.ConnectionError`, unless you start
 		another IPFS daemon instance at the same address.
 		"""
-		try:
-			self._client.request('/shutdown')
-		except exceptions.ConnectionError:
-			# Sometimes the daemon kills the connection before sending a
-			# response causing an incorrect `ConnectionError` to bubble
-			pass
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)

@@ -72,7 +72,7 @@ class Section(base.SectionBase):
 		| Keys | List of dictionaries with Names and Ids of public keys |
 		+------+--------------------------------------------------------+
 		"""
-		return self._client.request('/key/list', decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -99,10 +99,7 @@ class Section(base.SectionBase):
 			dict
 				Information about the key renameal
 		"""
-		args = (key_name, new_key_name)
-		return self._client.request(
-			'/key/rename', args, decoder='json', **kwargs
-		)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -130,5 +127,4 @@ class Section(base.SectionBase):
 		| Keys | List of key names and IDs that have been removed |
 		+------+--------------------------------------------------+
 		"""
-		args = (key_name,) + key_names
-		return self._client.request('/key/rm', args, decoder='json', **kwargs)
+		pass

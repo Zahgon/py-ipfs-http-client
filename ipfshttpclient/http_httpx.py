@@ -1,7 +1,7 @@
 """HTTP client for API requests based on HTTPx
 
 This will be supplemented by an asynchronous version based on HTTPx's
-asynchronous API soon™.
+asynchronous API soonâ„¢.
 """
 
 import math
@@ -87,33 +87,7 @@ class ClientSync(ClientSyncBase[httpx.Client]):
 	          headers: headers_t,
 	          params: params_t,
 	          timeout: timeout_t) -> None:
-		base_url: str
-		uds_path: ty.Optional[str]
-		family: socket.AddressFamily
-		host_numeric: bool
-		base_url, uds_path, family, host_numeric = multiaddr_to_url_data(addr, base)
-		
-		self._session_laddr = None
-		self._session_uds_path = None
-		if family != socket.AF_UNSPEC:
-			if family == socket.AF_INET:
-				self._session_laddr = "0.0.0.0"
-			elif family == socket.AF_INET6:
-				self._session_laddr = "::"
-			elif family == socket.AF_UNIX:
-				self._session_uds_path = uds_path
-			else:
-				assert False, ("multiaddr_to_url_data should only return a socket "
-				               "address family of AF_INET, AF_INET6 or AF_UNSPEC")
-		
-		self._session_base = base_url
-		self._session_kwargs = map_args_to_httpx(
-			auth=auth,
-			cookies=cookies,
-			headers=headers,
-			params=params,
-			timeout=timeout,
-		)
+		pass
 	
 	def _make_session(self) -> httpx.Client:
 		connection_pool = httpcore.SyncConnectionPool(

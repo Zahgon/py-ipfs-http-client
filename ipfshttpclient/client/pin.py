@@ -29,10 +29,7 @@ class Section(base.SectionBase):
 		| Pins | List of IPFS objects that have been pinned by this action |
 		+------+-----------------------------------------------------------+
 		"""
-		kwargs.setdefault("opts", {})["recursive"] = recursive
-		
-		args = (str(path), *(str(p) for p in paths))
-		return self._client.request('/pin/add', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -42,7 +39,7 @@ class Section(base.SectionBase):
 		By default, all pinned objects are returned, but the ``type`` flag or
 		arguments can restrict that to a specific pin type or to some specific
 		objects respectively. In particular the ``type="recursive"`` argument will
-		only list objects added ``.pin.add(…)`` (or similar) and will greatly
+		only list objects added ``.pin.add(â€¦)`` (or similar) and will greatly
 		speed processing as obtaining this list does *not* require a complete
 		repository metadata scan.
 		
@@ -50,31 +47,31 @@ class Section(base.SectionBase):
 		
 			>>> client.pin.ls()
 			{'Keys': {
-				'QmNNPMA1eGUbKxeph6yqV8ZmRkdVat … YMuz': {'Type': 'recursive'},
-				'QmNPZUCeSN5458Uwny8mXSWubjjr6J … kP5e': {'Type': 'recursive'},
-				'QmNg5zWpRMxzRAVg7FTQ3tUxVbKj8E … gHPz': {'Type': 'indirect'},
-				…
-				'QmNiuVapnYCrLjxyweHeuk6Xdqfvts … wCCe': {'Type': 'indirect'}
+				'QmNNPMA1eGUbKxeph6yqV8ZmRkdVat â€¦ YMuz': {'Type': 'recursive'},
+				'QmNPZUCeSN5458Uwny8mXSWubjjr6J â€¦ kP5e': {'Type': 'recursive'},
+				'QmNg5zWpRMxzRAVg7FTQ3tUxVbKj8E â€¦ gHPz': {'Type': 'indirect'},
+				â€¦
+				'QmNiuVapnYCrLjxyweHeuk6Xdqfvts â€¦ wCCe': {'Type': 'indirect'}
 			}}
 			
 			>>> # While the above works you should always try to use `type="recursive"`
 			>>> # instead as it will greatly speed up processing and only lists
-			>>> # explicit pins (added with `.pin.add(…)` or similar), rather than
+			>>> # explicit pins (added with `.pin.add(â€¦)` or similar), rather than
 			>>> # than all objects that won't be removed as part of `.repo.gc()`:
 			>>> client.pin.ls(type="recursive")
 			{'Keys': {
-				'QmNNPMA1eGUbKxeph6yqV8ZmRkdVat … YMuz': {'Type': 'recursive'},
-				'QmNPZUCeSN5458Uwny8mXSWubjjr6J … kP5e': {'Type': 'recursive'},
-				…
+				'QmNNPMA1eGUbKxeph6yqV8ZmRkdVat â€¦ YMuz': {'Type': 'recursive'},
+				'QmNPZUCeSN5458Uwny8mXSWubjjr6J â€¦ kP5e': {'Type': 'recursive'},
+				â€¦
 			}}
 			
-			>>> client.pin.ls('/ipfs/QmNNPMA1eGUbKxeph6yqV8ZmRkdVat … YMuz')
+			>>> client.pin.ls('/ipfs/QmNNPMA1eGUbKxeph6yqV8ZmRkdVat â€¦ YMuz')
 			{'Keys': {
-				'QmNNPMA1eGUbKxeph6yqV8ZmRkdVat … YMuz': {'Type': 'recursive'}}}
+				'QmNNPMA1eGUbKxeph6yqV8ZmRkdVat â€¦ YMuz': {'Type': 'recursive'}}}
 			
-			>>> client.pin.ls('/ipfs/QmdBCSn4UJP82MjhRVwpABww48tXL3 … mA6z')
+			>>> client.pin.ls('/ipfs/QmdBCSn4UJP82MjhRVwpABww48tXL3 â€¦ mA6z')
 			ipfshttpclient.exceptions.ErrorResponse:
-				path '/ipfs/QmdBCSn4UJP82MjhRVwpABww48tXL3 … mA6z' is not pinned
+				path '/ipfs/QmdBCSn4UJP82MjhRVwpABww48tXL3 â€¦ mA6z' is not pinned
 		
 		Parameters
 		----------
@@ -107,10 +104,7 @@ class Section(base.SectionBase):
 		| Keys | Mapping of IPFS object names currently pinned to their types |
 		+------+--------------------------------------------------------------+
 		"""
-		kwargs.setdefault("opts", {})["type"] = type
-		
-		args = tuple(str(p) for p in paths)
-		return self._client.request('/pin/ls', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -148,10 +142,7 @@ class Section(base.SectionBase):
 		| Pins | List of IPFS objects that have been unpinned by this action |
 		+------+-------------------------------------------------------------+
 		"""
-		kwargs.setdefault("opts", {})["recursive"] = recursive
-		
-		args = (str(path), *(str(p) for p in paths))
-		return self._client.request('/pin/rm', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -213,14 +204,14 @@ class Section(base.SectionBase):
 		
 		.. code-block:: python
 		
-			>>> with client.pin.verify("QmN…TTZ", verbose=True) as pin_verify_iter:
+			>>> with client.pin.verify("QmNâ€¦TTZ", verbose=True) as pin_verify_iter:
 			...     for item in pin_verify_iter:
 			...         print(item)
 			...
 			{"Cid":"QmVkNdzCBukBRdpyFiKPyL2R15qPExMr9rV9RFV2kf9eeV","Ok":True}
 			{"Cid":"QmbPzQruAEFjUU3gQfupns6b8USr8VrD9H71GrqGDXQSxm","Ok":True}
 			{"Cid":"Qmcns1nUvbeWiecdGDPw8JxWeUfxCV8JKhTfgzs3F8JM4P","Ok":True}
-			…
+			â€¦
 		
 		Parameters
 		----------
@@ -239,7 +230,4 @@ class Section(base.SectionBase):
 		| Ok  | Whether the given object was successfully verified |
 		+-----+----------------------------------------------------+
 		"""
-		kwargs.setdefault("opts", {})["verbose"] = verbose
-		
-		args = (str(path), *(str(p) for p in paths))
-		return self._client.request('/pin/verify', args, decoder='json', stream=True, **kwargs)
+		pass

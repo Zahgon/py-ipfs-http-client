@@ -35,9 +35,7 @@ class LogSection(base.SectionBase):
 		| Status | Textual status report |
 		+--------+-----------------------+
 		"""
-		args = (subsystem, level)
-		return self._client.request('/log/level', args,
-		                            decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -76,7 +74,7 @@ class LogSection(base.SectionBase):
 		| Strings | List of daemon logging subsystems |
 		+---------+-----------------------------------+
 		"""
-		return self._client.request('/log/ls', decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_multiple_items(base.ResponseBase, stream=True)
@@ -111,14 +109,13 @@ class LogSection(base.SectionBase):
 			 "peerID":"QmepsDPxWtLDuKvEoafkpJxGij4kMax11uTH7WnKqD25Dq",
 			 "session":"7770b5e0-25ec-47cd-aa64-f42e65a10023",
 			 "time":"2016-08-22T13:25:27.435843012Z"}
-			…
+			â€¦
 		
 		Returns
 		-------
 			Iterable[dict]
 		"""
-		return self._client.request('/log/tail', decoder='json',
-		                            stream=True, **kwargs)
+		pass
 
 
 
@@ -133,9 +130,9 @@ class RefsSection(base.SectionBase):
 		.. code-block:: python
 		
 			>>> client.unstable.refs('QmTkzDwWqPbnAh5YiV5VwcTLnGdwSNsNTn2aDxdXBFca7D')
-			[{'Ref': 'Qmd2xkBfEwEs9oMTk77A6jrsgurpF3ugXSg7 … cNMV', 'Err': ''},
-			 …
-			 {'Ref': 'QmSY8RfVntt3VdxWppv9w5hWgNrE31uctgTi … eXJY', 'Err': ''}]
+			[{'Ref': 'Qmd2xkBfEwEs9oMTk77A6jrsgurpF3ugXSg7 â€¦ cNMV', 'Err': ''},
+			 â€¦
+			 {'Ref': 'QmSY8RfVntt3VdxWppv9w5hWgNrE31uctgTi â€¦ eXJY', 'Err': ''}]
 		
 		Parameters
 		----------
@@ -159,15 +156,15 @@ class RefsSection(base.SectionBase):
 		.. code-block:: python
 		
 			>>> client.unstable.refs.local()
-			[{'Ref': 'Qmd2xkBfEwEs9oMTk77A6jrsgurpF3ugXSg7 … cNMV', 'Err': ''},
-			 …
-			 {'Ref': 'QmSY8RfVntt3VdxWppv9w5hWgNrE31uctgTi … eXJY', 'Err': ''}]
+			[{'Ref': 'Qmd2xkBfEwEs9oMTk77A6jrsgurpF3ugXSg7 â€¦ cNMV', 'Err': ''},
+			 â€¦
+			 {'Ref': 'QmSY8RfVntt3VdxWppv9w5hWgNrE31uctgTi â€¦ eXJY', 'Err': ''}]
 		
 		Returns
 		-------
 			list
 		"""
-		return self._client.request('/refs/local', decoder='json', **kwargs)
+		pass
 
 
 

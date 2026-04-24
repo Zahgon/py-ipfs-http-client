@@ -29,8 +29,7 @@ class FiltersSection(base.SectionBase):
 		| Strings | List of swarm filters added |
 		+---------+-----------------------------+
 		"""
-		args = (str(address), *(str(a) for a in address))
-		return self._client.request('/swarm/filters/add', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -60,8 +59,7 @@ class FiltersSection(base.SectionBase):
 		| Strings | List of swarm filters removed |
 		+---------+-------------------------------+
 		"""
-		args = (str(address), *(str(a) for a in address))
-		return self._client.request('/swarm/filters/rm', args, decoder='json', **kwargs)
+		pass
 
 
 class Section(base.SectionBase):
@@ -93,7 +91,7 @@ class Section(base.SectionBase):
 					'/ip4/172.17.0.1/tcp/4001',
 					'/ip4/178.62.107.36/tcp/4001',
 					'/ip6/::1/tcp/4001'],
-				…
+				â€¦
 			}}
 		
 		Returns
@@ -105,7 +103,7 @@ class Section(base.SectionBase):
 		| Addrs | Mapping of PeerIDs to a list its advertised multiaddrs |
 		+-------+--------------------------------------------------------+
 		"""
-		return self._client.request('/swarm/addrs', decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -120,8 +118,8 @@ class Section(base.SectionBase):
 		
 		.. code-block:: python
 		
-			>>> client.swarm.connect("/ip4/104.131.131.82/tcp/4001/ipfs/Qma … uvuJ")
-			{'Strings': ['connect QmaCpDMGvV2BGHeYERUEnRQAwe3 … uvuJ success']}
+			>>> client.swarm.connect("/ip4/104.131.131.82/tcp/4001/ipfs/Qma â€¦ uvuJ")
+			{'Strings': ['connect QmaCpDMGvV2BGHeYERUEnRQAwe3 â€¦ uvuJ success']}
 		
 		Parameters
 		----------
@@ -153,8 +151,8 @@ class Section(base.SectionBase):
 		
 		.. code-block:: python
 		
-			>>> client.swarm.disconnect("/ip4/104.131.131.82/tcp/4001/ipfs/Qm … uJ")
-			{'Strings': ['disconnect QmaCpDMGvV2BGHeYERUEnRQA … uvuJ success']}
+			>>> client.swarm.disconnect("/ip4/104.131.131.82/tcp/4001/ipfs/Qm â€¦ uJ")
+			{'Strings': ['disconnect QmaCpDMGvV2BGHeYERUEnRQA â€¦ uvuJ success']}
 		
 		Parameters
 		----------
@@ -166,8 +164,7 @@ class Section(base.SectionBase):
 			dict
 				Textual connection status report
 		"""
-		args = (str(address), *(str(a) for a in address))
-		return self._client.request('/swarm/disconnect', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -178,11 +175,11 @@ class Section(base.SectionBase):
 		
 			>>> client.swarm.peers()
 			{'Strings': [
-				'/ip4/101.201.40.124/tcp/40001/ipfs/QmZDYAhmMDtnoC6XZ … kPZc',
-				'/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYER … uvuJ',
-				'/ip4/104.223.59.174/tcp/4001/ipfs/QmeWdgoZezpdHz1PX8 … 1jB6',
-				…
-				'/ip6/fce3: … :f140/tcp/43901/ipfs/QmSoLnSGccFuZQJzRa … ca9z'
+				'/ip4/101.201.40.124/tcp/40001/ipfs/QmZDYAhmMDtnoC6XZ â€¦ kPZc',
+				'/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYER â€¦ uvuJ',
+				'/ip4/104.223.59.174/tcp/4001/ipfs/QmeWdgoZezpdHz1PX8 â€¦ 1jB6',
+				â€¦
+				'/ip6/fce3: â€¦ :f140/tcp/43901/ipfs/QmSoLnSGccFuZQJzRa â€¦ ca9z'
 			]}
 		
 		Returns
@@ -193,4 +190,4 @@ class Section(base.SectionBase):
 		| Strings | List of Multiaddrs that the daemon is connected to |
 		+---------+----------------------------------------------------+
 		"""
-		return self._client.request('/swarm/peers', decoder='json', **kwargs)
+		pass

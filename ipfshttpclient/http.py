@@ -44,12 +44,4 @@ def build_client_sync(  # type: ignore[no-any-unimported]
 		timeout: timeout_t = 120
 ) -> ClientSyncBase[ty.Any]:
 
-	return _backend.ClientSync(
-		addr=addr,
-		base=base,
-		offline=offline,
-		auth=auth,
-		cookies=cookies,
-		headers=headers or ty.cast(ty.Dict[str, str], {}),
-		timeout=timeout
-	)
+	pass

@@ -100,11 +100,7 @@ def multipart_content_type_headers(boundary: str, subtype: str = 'mixed') -> ty.
 	subtype
 		The subtype in :mimetype:`multipart/*`-domain to put into the header
 	"""
-	ctype = 'multipart/{}; boundary="{}"'.format(
-		subtype,
-		boundary
-	)
-	return {'Content-Type': ctype}
+	pass
 
 
 
@@ -196,7 +192,7 @@ class StreamBase(metaclass=abc.ABCMeta):
 		yield b'--%s--\r\n' % (self._boundary.encode("ascii"))
 
 
-# mypy sucks… :-(gh/python/mypy#8705)
+# mypy sucksâ€¦ :-(gh/python/mypy#8705)
 class _StreamFileMixinProto(ty_ext.Protocol):
 	@property
 	def chunk_size(self) -> int:
@@ -369,7 +365,7 @@ class DirectoryStream(StreamBase, StreamFileMixin, ty.Generic[ty.AnyStr]):
 		files and directories below it, will be included as well.
 	period_special
 		Whether a leading period in file/directory names should be matchable by
-		``*``, ``?`` and ``[…]`` – traditionally they are not, but many modern
+		``*``, ``?`` and ``[â€¦]`` â€“ traditionally they are not, but many modern
 		shells allow one to disable this behaviour
 	"""
 	__slots__ = ("abspath", "follow_symlinks", "scanner")
@@ -497,8 +493,7 @@ def stream_files(files: ty.Union[utils.clean_file_t, ty.Iterable[utils.clean_fil
 	chunk_size
 		Maximum size of each stream chunk
 	"""
-	stream = FilesStream(files, chunk_size=chunk_size)
-	return stream.body(), stream.headers()
+	pass
 
 
 def stream_directory(directory: ty.Union[ty.AnyStr, utils.PathLike[ty.AnyStr], int], *,
@@ -516,12 +511,7 @@ def stream_directory(directory: ty.Union[ty.AnyStr, utils.PathLike[ty.AnyStr], i
 	For the meaning of these parameters see the description of
 	:class:`DirectoryStream`.
 	"""
-	stream = DirectoryStream(directory, chunk_size=chunk_size,
-	                         follow_symlinks=follow_symlinks,
-	                         period_special=period_special,
-	                         patterns=patterns, recursive=recursive)
-	
-	return stream.body(), stream.headers()
+	pass
 
 
 _filepaths_t = ty.Union[utils.path_t, int, io.IOBase]
@@ -554,7 +544,7 @@ def stream_filesystem_node(
 	follow_symlinks
 		Follow symbolic links when recursively scanning directories? (directories only)
 	period_special
-		Treat files and directories with a leading period character (“dot-files”)
+		Treat files and directories with a leading period character (â€œdot-filesâ€�)
 		specially in glob patterns? (directories only)
 		
 		If this is set these files will only be matched by path labels whose initial
@@ -566,22 +556,7 @@ def stream_filesystem_node(
 	recursive
 		Scan directories recursively for additional files? (directories only)
 	"""
-	is_dir = False
-	if isinstance(filepaths, utils.path_types):
-		is_dir = os.path.isdir(filepaths)
-	elif isinstance(filepaths, int):
-		import stat
-		is_dir = stat.S_ISDIR(os.fstat(filepaths).st_mode)
-	if is_dir:
-		assert not isinstance(filepaths, collections.abc.Iterable) \
-		       or isinstance(filepaths, (str, bytes))
-		return stream_directory(
-			filepaths, chunk_size=chunk_size,
-			period_special=period_special,
-			patterns=patterns, recursive=recursive,
-		) + (True,)
-	else:
-		return stream_files(filepaths, chunk_size=chunk_size) + (False,)
+	pass
 
 
 def stream_bytes(

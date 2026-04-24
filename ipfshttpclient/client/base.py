@@ -83,15 +83,7 @@ class ResponseBase(ty.Mapping[str, response_item_t]):
 	
 	@classmethod
 	def _wrap_result(cls, value: json_value_t) -> response_item_t:
-		if isinstance(value, dict):
-			result = ResponseBase(value)  # type: response_item_t
-		elif isinstance(value, list):
-			result = _response_item_list_t()  # Part of workaround
-			for v in value:
-				result.append(cls._wrap_result(v))
-		else:
-			result = value
-		return result
+		pass
 	
 	def __iter__(self) -> ty.Iterator[str]:
 		return iter(self._raw)
@@ -125,7 +117,7 @@ class ResponseBase(ty.Mapping[str, response_item_t]):
 		In general, try to avoid modifying the returned dictionary if plan on
 		subsequently using this response object.
 		"""
-		return self._raw
+		pass
 
 
 T = ty.TypeVar("T")
@@ -135,7 +127,7 @@ wrap_cb_t = ty.Callable[[T], R]
 
 
 def ident(value: T) -> R:
-	return ty.cast(R, value)
+	pass
 
 
 class ResponseWrapIterator(ty.Generic[T, R]):
@@ -191,17 +183,7 @@ def returns_multiple_items(item_wrap_cb: wrap_cb_t[T, R] = ident, *, stream: boo
     -> _returns_multiple_wrapper1_t[T, R]:
 	def wrapper1(func: _inner_func_t[T]) -> _returns_multiple_wrapper2_t[T, R]:
 		@functools.wraps(func)
-		def wrapper2(*args: ty.Any, **kwargs: ty.Any) \
-		    -> ty.Union[ty.List[R], ResponseWrapIterator[T, R]]:
-			result = func(*args, **kwargs)
-			if isinstance(result, list):
-				return [item_wrap_cb(r) for r in result]
-			assert kwargs.get("stream", False) or stream, (
-				"Called IPFS HTTP-Client function should only ever return a list, "
-				"when not streaming a response"
-			)
-			return ResponseWrapIterator(result, item_wrap_cb)
-		return wrapper2  # type: ignore[return-value]
+		pass
 	return wrapper1
 
 
@@ -225,19 +207,7 @@ def returns_single_item(item_wrap_cb: wrap_cb_t[T, R] = ident, *, stream: bool =
     -> _returns_single_wrapper1_t[T, R]:
 	def wrapper1(func: _inner_func_t[T]) -> _returns_single_wrapper2_t[T, R]:
 		@functools.wraps(func)
-		def wrapper2(*args: ty.Any, **kwargs: ty.Any) -> ty.Union[R, ResponseWrapIterator[T, R]]:
-			result = func(*args, **kwargs)
-			if isinstance(result, list):
-				assert len(result) == 1, ("Called IPFS HTTP-Client function should "
-				                          "only ever return one item")
-				return item_wrap_cb(result[0])
-			
-			assert kwargs.get("stream", False) or stream, (
-				"Called IPFS HTTP-Client function should only ever return a list "
-				"with a single item, when not streaming a response"
-			)
-			return ResponseWrapIterator(result, item_wrap_cb)
-		return wrapper2  # type: ignore[return-value]
+		pass
 	return wrapper1
 
 
@@ -254,19 +224,7 @@ class _returns_single_wrapper_t(ty_ext.Protocol):
 
 def returns_no_item(func: _inner_func_t[ty.NoReturn]) -> _returns_single_wrapper_t:
 	@functools.wraps(func)
-	def wrapper(*args: ty.Any, **kwargs: ty.Any) \
-	    -> ty.Union[None, ResponseWrapIterator[None, None]]:
-		result = func(*args, **kwargs)
-		if isinstance(result, (list, bytes, object)):
-			assert not result, ("Called IPFS HTTP-Client function should never "
-			                    "return a non-empty item")
-			return None
-		assert kwargs.get("stream", False), (  # type: ignore[unreachable]
-			"Called IPFS HTTP-Client function should only ever return an empty "
-			"object, when not  streaming a response"
-		)
-		return ResponseWrapIterator(result, ident)
-	return wrapper  # type: ignore[return-value]
+	pass
 
 
 S = ty.TypeVar("S", bound="SectionBase")
@@ -311,15 +269,15 @@ class SectionBase:
 	# Proxy the parent's properties
 	@property
 	def _client(self) -> ClientSyncBase[ty.Any]:
-		return self.__parent._client
+		pass
 
 	@property
 	def chunk_size(self) -> int:
-		return self.__parent.chunk_size
+		pass
 
 	@chunk_size.setter
 	def chunk_size(self, value: int) -> None:
-		self.__parent.chunk_size = value
+		pass
 
 
 class ClientBase:
@@ -357,13 +315,13 @@ class ClientBase:
 			
 			Additional forms (proxying) may be supported in the future.
 		base
-			The HTTP URL path prefix (or “base”) at which the API is exposed on the
+			The HTTP URL path prefix (or â€œbaseâ€�) at which the API is exposed on the
 			API daemon
 		chunk_size
 			The size of data chunks passed to the operating system when uploading
 			files or text/binary content
 		offline
-			Ask daemon to operate in “offline mode” – that is, it should not consult
+			Ask daemon to operate in â€œoffline modeâ€� â€“ that is, it should not consult
 			the network when unable to find resources locally, but fail instead
 		session
 			Create this :class:`~ipfshttpclient.Client` instance with a session

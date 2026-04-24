@@ -51,7 +51,7 @@ class Section(base.SectionBase):
 			...           "Data": "another",
 			...           "Links": [ {
 			...               "Name": "some link",
-			...               "Hash": "QmXg9Pp2ytZ14xgmQjYEiHjVjMFXzCV … R39V",
+			...               "Hash": "QmXg9Pp2ytZ14xgmQjYEiHjVjMFXzCV â€¦ R39V",
 			...               "Size": 8
 			...           } ]
 			...       }'''))
@@ -74,11 +74,7 @@ class Section(base.SectionBase):
 			dict
 				Cid with the address of the dag object
 		"""
-		opts = {'format': format, 'input-enc': input_enc}
-		kwargs.setdefault('opts', {}).update(opts)
-		body, headers = multipart.stream_files(data, chunk_size=self.chunk_size)
-		return self._client.request('/dag/put', decoder='json', data=body,
-		                            headers=headers, **kwargs)
+		pass
 
 	@base.returns_single_item(base.ResponseBase)
 	def resolve(self, cid: base.cid_t, **kwargs: base.CommonArgs):
@@ -102,8 +98,7 @@ class Section(base.SectionBase):
 			dict
 				Cid with the address of the dag object
 		"""
-		args = (str(cid),)
-		return self._client.request('/dag/resolve', args, decoder='json', **kwargs)
+		pass
 
 	@base.returns_single_item(base.ResponseBase)
 	def imprt(self, data: utils.clean_file_t, **kwargs: base.CommonArgs):
@@ -133,9 +128,7 @@ class Section(base.SectionBase):
 			dict
 				Dictionary with the root CID of the DAG imported
 		"""
-		body, headers = multipart.stream_files(data, chunk_size=self.chunk_size)
-		return self._client.request('/dag/import', decoder='json', data=body,
-		                            headers=headers, **kwargs)
+		pass
 
 	def export(self, cid: str, **kwargs: base.CommonArgs):
 		"""Exports a DAG into a .car file format
@@ -157,5 +150,4 @@ class Section(base.SectionBase):
 			bytes
 				DAG in a .car format
 		"""
-		args = (str(cid),)
-		return self._client.request('/dag/export', args, **kwargs)
+		pass

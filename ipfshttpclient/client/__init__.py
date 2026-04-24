@@ -2,7 +2,7 @@
 
 Classes:
 
- * Client – a TCP client for interacting with an IPFS daemon
+ * Client â€“ a TCP client for interacting with an IPFS daemon
 """
 
 import os
@@ -63,7 +63,7 @@ def assert_version(version: str, minimum: str = VERSION_MINIMUM,
 	maximum
 		The maximum IPFS daemon version allowed (exclusive)
 	blacklist
-		Versions explicitly disallowed even if in range *minimum* – *maximum*
+		Versions explicitly disallowed even if in range *minimum* â€“ *maximum*
 	"""
 	# Convert version strings to integer tuples
 	version = list(map(int, version.split('-', 1)[0].split('.')))
@@ -142,23 +142,23 @@ class Client(files.Base, miscellaneous.Base):
 	between requests. The only caveat of this is that the client object should
 	be closed when it is not used anymore to prevent resource leaks.
 	
-	The easiest way of using this “session management” facility is using a
+	The easiest way of using this â€œsession managementâ€� facility is using a
 	context manager::
 	
 		with ipfshttpclient.connect() as client:
-			print(client.version())  # These calls…
-			print(client.version())  # …will reuse their TCP connection
+			print(client.version())  # These callsâ€¦
+			print(client.version())  # â€¦will reuse their TCP connection
 	
 	A client object may be re-opened several times::
 	
 		client = ipfshttpclient.connect()
 		print(client.version())  # Perform API call on separate TCP connection
 		with client:
-			print(client.version())  # These calls…
-			print(client.version())  # …will share a TCP connection
+			print(client.version())  # These callsâ€¦
+			print(client.version())  # â€¦will share a TCP connection
 		with client:
-			print(client.version())  # These calls…
-			print(client.version())  # …will share a different TCP connection
+			print(client.version())  # These callsâ€¦
+			print(client.version())  # â€¦will share a different TCP connection
 	
 	When storing a long-running :class:`Client` object use it like this::
 	
@@ -166,7 +166,7 @@ class Client(files.Base, miscellaneous.Base):
 			def __init__(self):
 				self._client = ipfshttpclient.connect(session=True)
 			
-			# … other code …
+			# â€¦ other code â€¦
 			
 			def close(self):  # Call this when you're done
 				self._client.close()
@@ -258,9 +258,7 @@ class Client(files.Base, miscellaneous.Base):
 			str
 				Hash of the added IPFS object
 		"""
-		body, headers = multipart.stream_bytes(data, chunk_size=self.chunk_size)
-		return self._client.request('/add', decoder='json',
-		                            data=body, headers=headers, **kwargs)
+		pass
 
 	@utils.return_field('Hash')
 	@base.returns_single_item(dict)
@@ -306,7 +304,7 @@ class Client(files.Base, miscellaneous.Base):
 			str
 				Hash of the added IPFS object
 		"""
-		return self.add_bytes(encoding.Json().encode(json_obj), **kwargs)
+		pass
 	
 	
 	@base.returns_single_item()
@@ -328,4 +326,4 @@ class Client(files.Base, miscellaneous.Base):
 			object
 				Deserialized IPFS JSON object value
 		"""
-		return self.cat(cid, decoder='json', **kwargs)
+		pass

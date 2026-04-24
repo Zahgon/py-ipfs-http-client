@@ -30,8 +30,7 @@ class Section(base.SectionBase):
 		| Keys | List of blocks the connected daemon is looking for |
 		+------+----------------------------------------------------+
 		"""
-		args = (peer,)
-		return self._client.request('/bitswap/wantlist', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -49,7 +48,7 @@ class Section(base.SectionBase):
 				'QmNZFQRxt9RMNm2VVtuV2Qx7q69bcMWRVXmr5CEkJEgJJP',
 				'QmNfCubGpwYZAQxX8LQDsYgB48C4GbfZHuYdexpX9mbNyT',
 				'QmNfnZ8SCs3jAtNPc8kf3WJqJqSoX7wsX7VqkLdEYMao4u',
-				…
+				â€¦
 			 ],
 			 'Wantlist': [
 				'QmeV6C6XVt1wf7V7as7Yak3mxPma8jzpqyhtRtCvpKcfBb',

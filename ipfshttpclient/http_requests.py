@@ -83,28 +83,7 @@ class ClientSync(ClientSyncBase[requests.Session]):  # type: ignore[name-defined
 	          headers: headers_t,
 	          params: params_t,
 	          timeout: timeout_t) -> None:
-		self._base_url, uds_path, family, host_numeric = multiaddr_to_url_data(addr, base)
-		
-		self._session_props = map_args_to_requests(
-			auth=auth,
-			cookies=cookies,
-			headers=headers,
-			params=params,
-		)
-		self._default_timeout = timeout
-		if PATCH_REQUESTS:  # pragma: no branch (always enabled in production)
-			self._session_props["family"] = family
-		
-		# Ensure that no proxy lookups are done for the UDS pseudo-hostname
-		#
-		# I'm well aware of the `.proxies` attribute of the session object: As it turns out,
-		# setting *that* attribute will *not* bypass system proxy resolution – only the
-		# per-request keyword-argument can do *that*…!
-		self._request_proxies = None  # type: ty.Optional[ty.Dict[str, str]]
-		if uds_path:
-			self._request_proxies = {
-				"no_proxy": urllib.parse.quote(uds_path, safe=""),
-			}
+		pass
 	
 	def _make_session(self) -> requests.Session:  # type: ignore[name-defined]
 		session = requests.Session()  # type: ignore[attr-defined]

@@ -74,11 +74,7 @@ json_value_t = ty.Union[
 def maybe_fsencode(val: str, ref: AnyStr) -> AnyStr:
 	"""Encodes the string *val* using the system filesystem encoding if *ref*
 	is of type :any:`bytes`"""
-
-	if isinstance(ref, bytes):
-		return os.fsencode(val)
-	else:
-		return val
+	pass
 
 
 def guess_mimetype(filename: str) -> str:
@@ -120,14 +116,7 @@ def clean_file(file: clean_file_t) -> ty.Tuple[ty.IO[bytes], bool]:
 		A filepath or file-like object that may or may not need to be
 		opened
 	"""
-	if isinstance(file, int):
-		return os.fdopen(file, 'rb', closefd=False), True
-	elif not hasattr(file, 'read'):
-		file = ty.cast(path_t, file)  # Cannot be ty.IO[bytes] without `.read()`
-		return open(file, 'rb'), True
-	else:
-		file = ty.cast(ty.IO[bytes], file)  # Must be ty.IO[bytes]
-		return file, False
+	pass
 
 
 def clean_files(files: ty.Union[clean_file_t, ty.Iterable[clean_file_t]]) \
@@ -148,11 +137,7 @@ def clean_files(files: ty.Union[clean_file_t, ty.Iterable[clean_file_t]]) \
 	files
 		Collection or single instance of a filepath and file-like object
 	"""
-	if not isinstance(files, path_types) and not hasattr(files, "read"):
-		for f in ty.cast(ty.Iterable[clean_file_t], files):
-			yield clean_file(f)
-	else:
-		yield clean_file(ty.cast(clean_file_t, files))
+	pass
 
 
 F = ty.TypeVar("F", bound=ty.Callable[..., ty.Dict[str, ty.Any]])
@@ -192,6 +177,5 @@ class return_field(ty.Generic[T]):
 			kwargs
 				Named parameter to pass to the wrapped callable
 			"""
-			res = cmd(*args, **kwargs)  # type: ty.Dict[str, T]
-			return res[self.field]
+			pass
 		return wrapper

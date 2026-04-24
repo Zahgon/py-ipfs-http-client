@@ -16,8 +16,7 @@ class Section(base.SectionBase):
 		-------
 			dict
 		"""
-		args = (str(peer), *(str(p) for p in peers))
-		return self._client.request('/bootstrap/add', args, decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -31,11 +30,11 @@ class Section(base.SectionBase):
 		
 			>>> client.bootstrap.list()
 			{'Peers': [
-				'/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYER … uvuJ',
-				'/ip4/104.236.176.52/tcp/4001/ipfs/QmSoLnSGccFuZQJzRa … ca9z',
-				'/ip4/104.236.179.241/tcp/4001/ipfs/QmSoLPppuBtQSGwKD … KrGM',
-				…
-				'/ip4/178.62.61.185/tcp/4001/ipfs/QmSoLMeWqB7YGVLJN3p … QBU3'
+				'/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYER â€¦ uvuJ',
+				'/ip4/104.236.176.52/tcp/4001/ipfs/QmSoLnSGccFuZQJzRa â€¦ ca9z',
+				'/ip4/104.236.179.241/tcp/4001/ipfs/QmSoLPppuBtQSGwKD â€¦ KrGM',
+				â€¦
+				'/ip4/178.62.61.185/tcp/4001/ipfs/QmSoLMeWqB7YGVLJN3p â€¦ QBU3'
 			]}
 		
 		Returns
@@ -46,7 +45,7 @@ class Section(base.SectionBase):
 		| Peers | List of known bootstrap peers |
 		+-------+-------------------------------+
 		"""
-		return self._client.request('/bootstrap', decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -63,5 +62,4 @@ class Section(base.SectionBase):
 		-------
 			dict
 		"""
-		args = (str(peer), *(str(p) for p in peers))
-		return self._client.request('/bootstrap/rm', args, decoder='json', **kwargs)
+		pass

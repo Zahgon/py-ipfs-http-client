@@ -12,7 +12,7 @@ class Section(base.SectionBase):
 			[{'Key': 'QmNPXDC6wTXVmZ9Uoc8X1oqxRRJr4f1sDuyQuwaHG2mpW2'},
 			 {'Key': 'QmNtXbF3AjAk59gQKRgEdVabHcSsiPUnJwHnZKyj2x8Z3k'},
 			 {'Key': 'QmRVBnxUCsD57ic5FksKYadtyUbMsyo9KYQKKELajqAp4q'},
-			 …
+			 â€¦
 			 {'Key': 'QmYp4TeCurXrhsxnzt5wqLqqUz8ZRg5zsc7GuUrUSDtwzP'}]
 		
 		Performs a garbage collection sweep of the local set of
@@ -34,9 +34,7 @@ class Section(base.SectionBase):
 			dict
 				List of IPFS objects that have been removed
 		"""
-		kwargs.setdefault("opts", {})["quiet"] = quiet
-		
-		return self._client.request('/repo/gc', decoder='json', **kwargs)
+		pass
 	
 	
 	@base.returns_single_item(base.ResponseBase)
@@ -47,7 +45,7 @@ class Section(base.SectionBase):
 		
 			>>> client.repo.stat()
 			{'NumObjects': 354,
-			 'RepoPath': '…/.local/share/ipfs',
+			 'RepoPath': 'â€¦/.local/share/ipfs',
 			 'Version': 'fs-repo@4',
 			 'RepoSize': 13789310}
 		
